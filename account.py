@@ -28,6 +28,11 @@ class System:
 
     def add_customer(self, customer: Customer):
         self.customer.append(customer)
+        
+    
+    
+    
+
 
 
 server = System()

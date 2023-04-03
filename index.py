@@ -72,7 +72,7 @@ class MainShop:
 
     def show_login(self):
         self.destroy_wigets_regisorlogin()
-        self.bgr = self.canvas.create_rectangle(1030.0,113.0,1440.0,924.0,fill="#82C9FF",outline="")
+        self.bgl = self.canvas.create_rectangle(1030.0,113.0,1440.0,924.0,fill="#82C9FF",outline="")
         self.canvas.place(x = 0, y = 0)
         self.textIdlogin = self.canvas.create_text(1049.0,199.0,anchor="nw",text="id",fill="#000000",font=("Inter", 15 * -1))
         self.textpasslogin = self.canvas.create_text(1047.0,266.0,anchor="nw",text="password",fill="#000000",font=("Inter", 15 * -1))
@@ -100,16 +100,18 @@ class MainShop:
         
     
     def destroy_widgets_login(self):                                                                                                                            #ลบหน้าล็อกอิน
-        self.canvas.delete(self.entry_bg_textfill_1, self.entry_bg_textfill_2, self.textIdlogin, self.textpasslogin, self.textlabelsignin ,self.bgr)
+        self.canvas.delete(self.entry_bg_textfill_1, self.entry_bg_textfill_2, self.textIdlogin, self.textpasslogin, self.textlabelsignin ,self.bgl)
         self.entry_ID.destroy()
         self.entry_Password.destroy()
         self.button_Signin.destroy()
         self.button_back.destroy()
+        if self.id_login == False:
+            self.select_loginAndregister()
         
     
         
     def destroy_widgets_register(self):                                                                                                             #ลบหน้าสมัครสมาชิก
-        self.canvas.delete()
+        self.canvas.delete(self.textIdregis, self.textpassregis, self.textnameregis, self.textemailregis, self.textphoneregis, self.textaddrregis, self.bgr)
         self.entry_ID.destroy()
         self.entry_Password.destroy()
         self.entry_Name.destroy()
@@ -123,7 +125,7 @@ class MainShop:
     def destroy_wigets_regisorlogin(self):                                                                                                              #ลบหน้าสมัครสมาชิกและหน้าล็อกอิน
         self.button_Signinlr.destroy()
         self.button_Signuplr.destroy()
-        self.canvas.delete(self.bglr)    
+        self.canvas.delete(self.bglr ,self.button_image_Signinlr ,self.button_image_Signuplr)    
         
     def show_register(self):                                                                                                                            #เปิดหน้าสมัครสมาชิก
         self.destroy_wigets_regisorlogin()
@@ -184,8 +186,8 @@ class MainShop:
                     break
             if self.id_match:
                 print ("Login success Welcome" ,self.customer.name)
-                self.destroy_widgets_login()
                 self.id_login = True
+                self.destroy_widgets_login()
                 msg.showinfo("Login", "Login success Welcome" + self.customer.name)
                 self.infologin = [self.customer.name , self.customer.id , self.customer.address]
                 self.updatelabel()
@@ -204,6 +206,7 @@ class MainShop:
 
    
     def register_button_clicked(self):
+        self.destroy_wigets_regisorlogin()
         id_value = self.entry_ID.get()
         password_value = self.entry_Password.get()
         name_value = self.entry_Name.get()
@@ -233,13 +236,8 @@ class MainShop:
                                     phone=phone_value,
                                     address=address_value)
                 server.add_customer(customer)
-                
-
-                success_window = tk.Toplevel(self.master)
-                success_window.geometry("300x100")
-                success_window.title("Success!")
-                success_label = tk.Label(success_window, text="Registration Successful!", font=("Inter", 16), fg="#000716")
-                success_label.pack(padx=20, pady=20)
+                msg.showinfo("Register", "Register success")
+                self.destroy_widgets_register()
 
 main_shop = MainShop(root)
 root.resizable(False, False)

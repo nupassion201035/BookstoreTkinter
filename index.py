@@ -11,11 +11,13 @@ root = tk.Tk()
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
+w = tk
+
 
 class MainShop:
 
     def __init__(self, master):
-        self.showname = "guset"
+        self.showname = "Guest"
         self.TKshowname = tk.StringVar()
         self.TKshowname.set(self.showname)
         self.id_login = False
@@ -26,7 +28,7 @@ class MainShop:
         self.canvas = Canvas(root, bg = "#1895F5", height = 924, width = 1440, bd = 0, highlightthickness = 0, relief = "ridge")
         self.canvas.place(x = 0, y = 0)
         self.canvas.create_rectangle(0.0,114.0,1440.0,924.0,fill="#FFFFFF",outline="")
-        self.shownamelabel = self.canvas.create_text(1091.0,50.0,anchor="nw",text=self.TKshowname.get(),fill="#FFFFFF",font=("Inter", 16 * -1))
+        self.shownamelabel = self.canvas.create_text(1331.0,50.0,anchor="nw",text=self.TKshowname.get(),fill="#FFFFFF",font=("Inter", 16 * -1))
         
         
         
@@ -38,13 +40,13 @@ class MainShop:
         self.button_account_image = PhotoImage(
         file=relative_to_assets("button_14.png"))
         self.button_account = Button(image=self.button_account_image,borderwidth=0,highlightthickness=0,command=self.select_loginAndregister,relief="flat")
-        self.button_account.place(x=1335.0,y=30.0,width=56.0,height=56.0)
+        self.button_account.place(x=1207.0,y=30.0,width=56.0,height=56.0)
         
         
         self.button_cart_image = PhotoImage(
         file=relative_to_assets("button_15.png"))
         self.button_cart = Button(image=self.button_cart_image,borderwidth=0,highlightthickness=0,command=lambda: print("button_15 clicked"),relief="flat")
-        self.button_cart.place(x=1225.0, y=28.0, width=56.0, height=56.0)
+        self.button_cart.place(x=1083.0, y=30.0, width=56.0, height=56.0)
         
         self.button_manga_image = PhotoImage(
         file=relative_to_assets("button_manga.png"))
@@ -68,7 +70,29 @@ class MainShop:
             self.button_image_Signuplr = PhotoImage(file=relative_to_assets("button_signup.png"))
             self.button_Signuplr = Button(image=self.button_image_Signuplr,borderwidth=0,highlightthickness=0,command=self.show_register,relief="flat")
             self.button_Signuplr.place(x=1268.0,y=211.0,width=97.0,height=33.0)
-
+        if self.id_login:
+            self.bgaccount = self.canvas.create_rectangle(1030.0,113.0,1440.0,924.0,fill="#82C9FF",outline="")
+            self.bgwhite = self.canvas.create_rectangle(1043.0,208.0,1422.0,582.0,fill="#FFFFFF",outline="")
+            self.canvas.create_text(1047.0,153.0,anchor="nw",text="Account Info",fill="#FFFFFF",font=("Inter", 16 * -1))
+            self.TKidaccount  = tk.StringVar()
+            self.TKnameaccount = tk.StringVar()
+            self.TKemailaccount = tk.StringVar()
+            self.TKphoneaccount = tk.StringVar()
+            self.TKaddraccount = tk.StringVar()
+            self.TKidaccount.set("ID: "+self.infologin[0])
+            self.TKnameaccount.set("NAME: "+self.infologin[1])
+            self.TKemailaccount.set("EMAIL: "+self.infologin[2])
+            self.TKphoneaccount.set("PHONE: "+self.infologin[3])
+            self.TKaddraccount.set("ADDRESS: "+self.infologin[4])
+            self.textIdaccount = self.canvas.create_text(1049.0,220.0,anchor="nw",text=self.TKidaccount.get(),fill="#000000",font=("Inter", 15 * -1))
+            self.textnameaccount = self.canvas.create_text(1047.0,300.0,anchor="nw",text=self.TKnameaccount.get(),fill="#000000",font=("Inter", 15 * -1))
+            self.textemailaccount = self.canvas.create_text(1047.0,380.0,anchor="nw",text=self.TKemailaccount.get(),fill="#000000",font=("Inter", 15 * -1))
+            self.textphoneaccount = self.canvas.create_text(1047.0,460.0,anchor="nw",text=self.TKphoneaccount.get(),fill="#000000",font=("Inter", 15 * -1))
+            self.textaddraccount = self.canvas.create_text(1047.0,540.0,anchor="nw",text=self.TKaddraccount.get(),fill="#000000",font=("Inter", 15 * -1))
+            
+            self.button_image_back = PhotoImage(file=relative_to_assets("button_back.png"))
+            self.button_back = Button(image=self.button_image_back,borderwidth=0,highlightthickness=0,command=self.destroy_widgets_account,relief="flat")
+            self.button_back.place(x=1048.0,y=623.0,width=97.0,height=33.0)
 
     def show_login(self):
         self.destroy_wigets_regisorlogin()
@@ -97,6 +121,8 @@ class MainShop:
         self.button_image_back = PhotoImage(file=relative_to_assets("button_back.png"))
         self.button_back = Button(image=self.button_image_back,borderwidth=0,highlightthickness=0,command=self.destroy_widgets_login,relief="flat")
         self.button_back.place(x=1049.0,y=353.0,width=97.0,height=33.0)
+    
+    
         
     
     def destroy_widgets_login(self):                                                                                                                            #ลบหน้าล็อกอิน
@@ -189,7 +215,7 @@ class MainShop:
                 self.id_login = True
                 self.destroy_widgets_login()
                 msg.showinfo("Login", "Login success Welcome" + self.customer.name)
-                self.infologin = [self.customer.name , self.customer.id , self.customer.address]
+                self.infologin = [self.customer.id, self.customer.name, self.customer.address, self.customer.phone, self.customer.email, self.customer.address]
                 self.updatelabel()
                 print(self.infologin)
             else:
@@ -202,7 +228,7 @@ class MainShop:
         self.canvas.delete(self.shownamelabel)
         self.showname = self.customer.name
         self.TKshowname.set("Welcome " + self.customer.name)
-        self.shownamelabel = self.canvas.create_text(1091.0,50.0,anchor="nw",text=self.TKshowname.get(),fill="#FFFFFF",font=("Inter", 16 * -1))
+        self.shownamelabel = self.canvas.create_text(1331.0,50.0,anchor="nw",text=self.TKshowname.get(),fill="#FFFFFF",font=("Inter", 16 * -1))
 
    
     def register_button_clicked(self):
@@ -238,6 +264,7 @@ class MainShop:
                 server.add_customer(customer)
                 msg.showinfo("Register", "Register success")
                 self.destroy_widgets_register()
+
 
 main_shop = MainShop(root)
 root.resizable(False, False)

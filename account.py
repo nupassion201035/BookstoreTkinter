@@ -10,6 +10,9 @@ class Account:
     email: str
     phone: str
 
+    
+    
+
 @dataclass
 class Admin(Account):
     permission: str = "admin"
@@ -17,7 +20,7 @@ class Admin(Account):
 @dataclass
 class Customer(Account):
     address: str = ""
-
+    
 class System:
     def __init__(self):
         self.admin: List[Admin] = []
@@ -28,8 +31,7 @@ class System:
 
     def add_customer(self, customer: Customer):
         self.customer.append(customer)
-        
-    
+
     
     
 

@@ -26,13 +26,18 @@ class System:
     def __init__(self):
         self.admin: List[Admin] = []
         self.customer: List[Customer] = []
+        self.customerlogin: str = ""
 
     def add_admin(self, admin: Admin):
         self.admin.append(admin)
 
     def add_customer(self, customer: Customer):
         self.customer.append(customer)
-
+    
+    def customer_login(self, customer: Customer):
+        self.customerlogin = customer
+    def customer_logout(self, customer: Customer):
+        self.customerlogin.remove(customer)
 
 
 

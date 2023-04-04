@@ -62,7 +62,7 @@ class Mainpage(tk.Frame):
         
         self.button_manga_image = PhotoImage(
         file=relative_to_assets("button_manga.png"))
-        self.button_manga = Button(self, image=self.button_manga_image, borderwidth=0, highlightthickness=0,command=lambda: print(server.status),relief="flat")
+        self.button_manga = Button(self, image=self.button_manga_image, borderwidth=0, highlightthickness=0,command=lambda: controller.show_frame(MangaPage),relief="flat")
         self.button_manga.place(x=274, y=43)
         
         self.button_novel_image = PhotoImage(
@@ -127,7 +127,7 @@ class Loginpage(tk.Frame):
         self.entry_ID = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0 ,font=("Inter", 15)) 
         self.entry_ID.place(x=1064.0, y=230.0, width=346.0, height=35.0)
         
-        self.entry_Password = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0 , show="*")
+        self.entry_Password = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0 , show="·",font=("Inter", 40))
         self.entry_Password.place(x=1063.0, y=320.0, width=346.0, height=35.0)
         
         self.button_image_Signin = PhotoImage(file=relative_to_assets("button_signin.png"))
@@ -146,38 +146,28 @@ class Loginpage(tk.Frame):
             
 
         
-    def system_login(self ):
+    def system_login(self):
         self.id = self.entry_ID.get()
         self.password = self.entry_Password.get()
         self.entry_ID.delete(0,END)
         self.entry_Password.delete(0,END)
         if server.status == True:
             msg.showinfo("Login", "You are already logged in")
+            raise Exception("You are already logged in")
         if server.status == False:
-            self.iogin_check = False
             for self.customer in server.customer:
                 if self.customer.id == self.id and self.customer.password == self.password:
                     server.status = True
-                    self.login_check = True
                     print(self.customer , server.status)
                     msg.showinfo("Login", "Login Success")
+                    System.customer_login(server, self.customer.id)
+                    print(server.customerlogin)
                     self.controller.show_frame(Mainpage)
                     break
                 else:
                     msg.showinfo("Login", "Login Failed Plase try again")
+                    raise Exception("Login Failed")
     
-                
-        
-        
-        
-
-
-        
-        
-        
-        
-
-
 class Registerpage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -208,6 +198,48 @@ class Registerpage(tk.Frame):
         self.button_bookstore_image = PhotoImage(file=relative_to_assets("button_Bookstore.png"))
         self.button_bookstore = Button(self, image=self.button_bookstore_image,borderwidth=0,highlightthickness=0,command=lambda: controller.show_frame(Mainpage),relief="flat")
         self.button_bookstore.place(x=22.0, y=30.0, width=218.0, height=54.0)
+        
+        self.canvas = Canvas(self, bg="#82C9FF", height=1000, width=811, bd=0, highlightthickness=0, relief="ridge")
+        self.canvas.place(x=1030, y=110)
+        
+        self.Lable_main = Label(self, text="Sign up Bookstore", bg="#82c9ff", fg="white", font=("Inter", 16))
+        self.Lable_main.place(x=1047.0,y=153.0)
+        self.textId = Label(self, text="ID" ,bg="#82c9ff", fg="#FFFFFF", font=("Inter", 12))
+        self.textId.place(x=1049.0, y=200.0)
+        self.textpass = Label(self, text="Password" ,bg="#82c9ff", fg="#FFFFFF", font=("Inter", 12))
+        self.textpass.place(x=1047.0, y=290.0)
+        self.textname = Label(self, text="Name" ,bg="#82c9ff", fg="#FFFFFF", font=("Inter", 12))
+        self.textname.place(x=1047.0, y=380.0)
+        self.textemail = Label(self, text="Email" ,bg="#82c9ff", fg="#FFFFFF", font=("Inter", 12))
+        self.textemail.place(x=1047.0, y=470.0)
+        self.textphone = Label(self, text="Phone" ,bg="#82c9ff", fg="#FFFFFF", font=("Inter", 12))
+        self.textphone.place(x=1047.0, y=560.0)
+        self.textaddress = Label(self, text="Address" ,bg="#82c9ff", fg="#FFFFFF", font=("Inter", 12))
+        self.textaddress.place(x=1047.0, y=650.0)
+        
+
+        self.entry_ID = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0 ,font=("Inter", 15)) 
+        self.entry_ID.place(x=1064.0, y=230.0, width=346.0, height=35.0)
+        
+        self.entry_Password = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0 ,show="·",font=("Inter", 40))
+        self.entry_Password.place(x=1064.0, y=320.0, width=346.0, height=35.0)
+        
+        self.entry_Name = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0 ,font=("Inter", 15))
+        self.entry_Name.place(x=1064.0, y=410.0, width=346.0, height=35.0)
+        
+        self.entry_Email = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0 ,font=("Inter", 15))
+        self.entry_Email.place(x=1064.0, y=500.0, width=346.0, height=35.0)
+        
+        self.entry_Phone = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0 ,font=("Inter", 15))
+        self.entry_Phone.place(x=1064.0, y=590.0, width=346.0, height=35.0)
+        
+        self.entry_Address = Entry(self, bd=0, bg="#FFFFFF", fg="#000716", highlightthickness=0 ,font=("Inter", 15))
+        self.entry_Address.place(x=1064.0, y=680.0, width=346.0, height=35.0)
+        
+        self.button_image_signup = PhotoImage(file=relative_to_assets("button_signup.png"))
+        self.button_signup = Button(self, image=self.button_image_signup,borderwidth=0,highlightthickness=0,command=lambda: controller.show_frame(Registerpage),relief="flat")
+        self.button_signup.place(x=1188.0,y=750.0,width=97.0,height=33.0)
+        
 
 class Cartpage(tk.Frame):
     
@@ -332,6 +364,20 @@ class AccountPage(tk.Frame):
         self.button_bookstore_image = PhotoImage(file=relative_to_assets("button_Bookstore.png"))
         self.button_bookstore = Button(self, image=self.button_bookstore_image,borderwidth=0,highlightthickness=0,command=lambda: controller.show_frame(Mainpage),relief="flat")
         self.button_bookstore.place(x=22.0, y=30.0, width=218.0, height=54.0)
+        
+        self.canvas = Canvas(self, bg="#82C9FF", height=1000, width=811, bd=0, highlightthickness=0, relief="ridge")
+        self.canvas.place(x=1030, y=110)
+        self.Accountinfo = StringVar()
+    
+        self.Accountinfo.set("AccountInfo  " + server.customerlogin)
+        self.Lable_main = Label(self, text=self.Accountinfo.get(), bg="#82c9ff", fg="white", font=("Inter", 16))
+        self.Lable_main.place(x=1047.0,y=153.0)
+        
+        self.Lable_ID = Label(self, text="ID", bg="#82c9ff", fg="white", font=("Inter", 16))
+        self.Lable_ID.place(x=1047.0,y=203.0)
+        
+        self.Lable_Name = Label(self, text="Name", bg="#82c9ff", fg="white", font=("Inter", 16))
+        self.Lable_Name.place(x=1047.0,y=253.0)
     
 
 app = Bookstore()

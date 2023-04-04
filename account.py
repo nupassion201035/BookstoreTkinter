@@ -22,6 +22,7 @@ class Customer(Account):
     address: str = ""
     
 class System:
+    status = False
     def __init__(self):
         self.admin: List[Admin] = []
         self.customer: List[Customer] = []
@@ -32,8 +33,6 @@ class System:
     def add_customer(self, customer: Customer):
         self.customer.append(customer)
 
-    
-    
 
 
 

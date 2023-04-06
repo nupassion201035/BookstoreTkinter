@@ -35,6 +35,8 @@ class Bookstore(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
         self.show_frame(Mainpage)
         
+        
+        
     def show_frame(self, cont):
     
         frame = self.frames[cont]
@@ -240,6 +242,8 @@ class Registerpage(tk.Frame):
         self.button_signup = Button(self, image=self.button_image_signup,borderwidth=0,highlightthickness=0,command=lambda: controller.show_frame(Registerpage),relief="flat")
         self.button_signup.place(x=1188.0,y=750.0,width=97.0,height=33.0)
         
+    def register(self):
+        pass
 
 class Cartpage(tk.Frame):
     
@@ -309,6 +313,7 @@ class NovelPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.canvas = Canvas(self, bg="#1895F5", height=110, width=1440, bd=0, highlightthickness=0, relief="ridge")
         self.canvas.pack()
+        
         
         self.button_account_image = PhotoImage(file=relative_to_assets("button_account.png"))
         self.button_account = Button(self, image=self.button_account_image,borderwidth=0,highlightthickness=0,command=lambda: controller.show_frame(AccountPage) if server.status else controller.show_frame(Loginpage),relief="flat")
